@@ -1,8 +1,11 @@
-from django.contrib import admin
 from django.urls import path
-from .views import PatoListCreateAPIView, PatoDetailAPIView  # Importa a view correta
-
+from .views import PatoListCreatAPIView, PatoRetrieveUpdateDestroyAPIView, LoginView
+from django.conf.urls.static import static
+from django.conf import settings
 urlpatterns = [
-    path('pato/', PatoListCreateAPIView.as_view(), name='pato-list-create'),
-    path('patos/<int:pk>/', PatoDetailAPIView.as_view(), name='pato-especifico'),  # Usa a view certa
-]
+    path('patos/',PatoListCreatAPIView.as_view(), name='pato-list-all'),
+    path('patos/<int:pk>/',PatoRetrieveUpdateDestroyAPIView.as_view(), name='pato-especifico'),
+    path('logar/', LoginView.as_view(), name='logar')
+]       
+if settings.DEBUG:
+    urlpatterns +=static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

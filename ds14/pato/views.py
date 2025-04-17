@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from .models import Pato
-from .serializers import PatoSerializer, LoginSerializer, DonoDoPatoSerializer
+from .serializers import PatoSerializer, LoginSerializer, DonoDoPatoSerializer, LoginSerializer2
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import serializers, status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 class PatoPaginacao(PageNumberPagination):
     page_size = 3
@@ -17,6 +18,7 @@ class PatoListCreateAPIView(ListCreateAPIView):
     queryset = Pato.objects.all()
     serializer_class = PatoSerializer
     pagination_class = PatoPaginacao
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -59,3 +61,6 @@ class loginView(CreateAPIView):
             'refresh': serializer.validated_data['refresh'],
             'access': serializer.validated_data['access']
         }, status=HTTP_200_OK)
+    
+class LoginView2(TokenObtainPairView):
+    serializer_class = LoginSerializer2

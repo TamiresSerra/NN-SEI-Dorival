@@ -18,6 +18,7 @@ class Pato(models.Model):
 class DonoPato(AbstractUser):
     nome =models.CharField(max_length=10, blank=True, null=True)
     foto_de_perfil = models.ImageField(upload_to='fotos_perfil/', null=True, blank=True)
+    bio = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.username

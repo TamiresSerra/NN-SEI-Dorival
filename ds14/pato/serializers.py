@@ -3,6 +3,7 @@ from .models import Pato, DonoPato
 from .views import Pato
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class PatoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,3 +45,13 @@ class LoginSerializer(serializers.Serializer):
         else:
             mensagem = "username ou senha não inseridos"
             raise serializers.ValidationError(mensagem, code='authorization')
+
+class LoginSerializer2(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        dados = super().validate(attrs)
+        dados['usuario'] = {
+            'nome': self.user.username,
+            'bio': self.user.bio
+        }
+
+        return dados

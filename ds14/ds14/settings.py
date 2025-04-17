@@ -93,7 +93,11 @@ WSGI_APPLICATION = 'ds14.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # Cria o arquivo do banco na raiz do projeto
+        'NAME': 'pato',
+        'USER': 'root',
+        'PASSWORD': 'senai',
+        'HOST': 'localhost',
+        'PORT': ' 3306',
     }
 }
 
